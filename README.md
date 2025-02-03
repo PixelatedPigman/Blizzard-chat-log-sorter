@@ -7,5 +7,5 @@ Steps:
 3. Locate your chat logs by searching for "Overwatch Chat" (without quotes) via ctrl+F
 4. Copy and paste those into a blank .txt file
 5. Download sortOWChat.txt (or copy paste to file of same name) from this repo to the same folder as the file you pasted your logs in.
-6. Open command terminal and navigate to that folder, then run command "python sortOWChat.txt <log file name>" (without quotes and fill in the <log file name> with whatever you name the file you copy pasted your logs into)
-7. Check <log file name>_out.txt to see your sorted chat logs.
+6. Open command terminal and navigate to that folder, then run command "python sortOWChat.txt {log file name}" (without quotes and fill in the {log file name} with whatever you name the file you copy pasted your logs into)
+7. Check {log file name}_out.txt to see your sorted chat logs.
