@@ -1,0 +1,75 @@
+import sys
+
+def doBlizzardsJobForThem(file):
+	with open(file, 'r', encoding='utf-8') as fopen:
+		chat = fopen.read().splitlines()
+	if "accountid" in chat[0]:
+		del chat[0] 
+
+	nchat = []
+	for line in chat:
+		line = line.split("\t")
+		if len(line) == 1:
+			print(f"no tab in line: {line}")
+		else:
+			line = line[0].split(" ") + line[1:]
+
+			if len(line)>0:
+				if len(line) == 8:
+					del line[6]
+					del line[5]
+					del line[0]
+				else:
+					print(f"malformatted line: {line}")
+					print(f"len: {len(line)}")
+				nchat += [line]
+	chat = nchat
+
+
+	months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
+	nums = ["01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"]
+	print(chat[:5])
+	chat = [[line[2] + "/" + nums[months.index(line[0])] + "/" + line[1] + " " + line[3]] + line[4:] for line in chat]
+	print(chat[:5])
+
+	def merge(a, b):
+		c = []
+		while a and b:
+			if a[0][0] < b[0][0]:
+				c.append(a.pop(0))
+			else:
+				c.append(b.pop(0))
+		while a:
+			c.append(a.pop(0))
+		while b:
+			c.append(b.pop(0))
+		return c
+	
+	def sort(c):
+		if len(c) <= 1:
+			return c
+		i = len(c)//2
+		a = c[:i]
+		b = c[i:]
+		return merge(sort(a), sort(b))
+
+	chat = sort(chat)
+	print(chat[:5])
+	chat = [" ".join(line) for line in chat]
+	chat = "\n".join(chat)
+	file = file.split(".")
+	file = file[0] + "_out" + "." + file[1]
+	
+	with open(file, "w", encoding='utf-8') as fwrite:
+		fwrite.write(chat)
+
+if sys.argv[1]:
+	file = sys.argv[1]
+	if "." in file:
+		doBlizzardsJobForThem(file)
+	else: 
+		doBlizzardsJobForThem(file + ".txt")
+else:
+	print("file name not specified")
+
+
